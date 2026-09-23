@@ -1,0 +1,5 @@
+interface:
+  display_name: "Triage"
+  short_description: "課題をトリアージの役割に沿って移す"
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,116 @@
+---
+name: setup-matt-pocock-skills
+description: "エンジニアリングスキル用にこのリポジトリを設定する: 課題トラッカー、トリアージラベルの語彙、ドメイン文書の配置を設定する。他のエンジニアリングスキルを初めて使う前に一度実行する。"
+disable-model-invocation: true
+---
+
+# Matt Pocock のスキルをセットアップ
+
+エンジニアリングスキルが前提とする、リポジトリごとの設定をひな形から作成する:
+
+- **課題トラッカー（issue tracker）**: 課題を置く場所（既定はGitHub。ローカルMarkdownもそのまま使える）
+- **トリアージラベル**: 5つの標準トリアージ役割に使う文字列
+- **ドメイン文書**: `CONTEXT.md` とADRを置く場所、およびそれらを読むときの規則
+
+これは決定的なスクリプトではなく、プロンプト駆動のスキルである。調査し、見つけたものを示し、ユーザーに確認してから書き込む。
+
+## 手順
+
+### 1. 調査
+
+現在のリポジトリを調べ、開始時点の状態を把握する。思い込まず、存在するものを読む:
+
+- `git remote -v` と `.git/config`: GitHubリポジトリか。どのリポジトリか。
+- リポジトリルートの `AGENTS.md` と `CLAUDE.md`: どちらかが存在するか。どちらかに `## Agent skills` セクションがすでにあるか。
+- リポジトリルートの `CONTEXT.md` と `CONTEXT-MAP.md`
+- `docs/adr/` と `src/*/docs/adr/` ディレクトリ
+- `docs/agents/`: このスキルが以前に出力したものがすでにあるか。
+- `.scratch/`: ローカルMarkdown課題トラッカーの規約をすでに使っている兆候
+- `triage` スキルがインストールされているか（このスキルと並ぶ `triage` スキルフォルダー、または利用可能なスキルに `triage` があるか）。これでセクションBを実行するか決まる。
+- モノレポの兆候: `pnpm-workspace.yaml`、`package.json` の `workspaces` フィールド、または独自の `src/` を持つ `packages/*` が埋まっている状態。これらは本当に大規模なマルチパッケージリポジトリにだけ存在し、不在なら `single-context`（単一コンテキスト）である（ほとんどのリポジトリが該当する）。
+
+### 2. 見つけたものを示して質問
+
+存在するものと不足しているものを要約する。その後、セクションを順番に進める。1セクションにつき1つの回答を得てから次へ進む。
+
+各セクションは推奨回答から始め、ユーザーが一言で受け入れられるようにする。選択肢が実際に分岐するときだけ一行の説明を添え、調査ですでに決まっている場合はそのセクションを完全に省略する（`triage` が未インストールならセクションB、モノレポでなければセクションC）。
+
+**セクションA: 課題トラッカー。**
+
+> 説明: 「課題トラッカー」とは、このリポジトリの課題を置く場所である。`to-tickets`、`triage`、`to-spec` などのスキルは、そこから課題を読み書きする。`gh issue create` を呼ぶのか、`.scratch/` 以下にMarkdownファイルを書くのか、別のワークフローに従うのかを知る必要がある。このリポジトリで実際に作業を追跡している場所を選ぶ。
+
+既定の姿勢: これらのスキルはGitHub向けに設計されている。`git remote` がGitHubを指していれば、GitHubを提案する。`git remote` がGitLab（`gitlab.com` またはセルフホストのホスト）を指していれば、GitLabを提案する。それ以外（またはユーザーが望む場合）は、次を提示する:
+
+- **GitHub**: 課題はリポジトリのGitHub Issuesに置く（`gh` CLIを使う）
+- **GitLab**: 課題はリポジトリのGitLab Issuesに置く（[`glab`](https://gitlab.com/gitlab-org/cli) CLIを使う）
+- **ローカルMarkdown**: 課題はこのリポジトリの `.scratch/<feature>/` 以下にファイルとして置く（個人プロジェクト、またはリモートのないリポジトリに向く）
+- **その他**（Jira、Linearなど）: ユーザーにワークフローを一段落で説明してもらう。スキルはそれを自由記述として記録する。
+
+選択結果を `docs/agents/issue-tracker.md` に記録する。GitHubとGitLabのテンプレートには「PRを依頼受付面にする」フラグがあり、既定値は **off** である。offのままにし、話題に出さない。外部PRをtriageキューに入れたいユーザーは、後でファイルのフラグを変更できる。
+
+**セクションB: トリアージラベルの語彙。** `triage` スキルがインストールされていない場合は、このセクション全体を省略する（調査で分かる）。インストールされていないスキルにはラベルが不要だからである。
+
+インストールされている場合は、質問をちょうど1つだけする:
+
+> 既定のトリアージラベルを維持しますか。（推奨: **yes**）
+
+既定値は5つの標準役割で、それぞれのラベル文字列は役割名と同じである: `needs-triage`、`needs-info`、`ready-for-agent`、`ready-for-human`、`wontfix`。**yes** ならそのまま書く。**no** の場合だけ、通常は課題トラッカーが別の名前（例: `needs-triage` に対する `bug:triage`）をすでに使っているため、上書き値を集める。これにより `triage` は重複を作らず、既存のラベルを適用する。
+
+**セクションC: ドメイン文書。** 既定は **single-context**（ルートに `CONTEXT.md` 1つと `docs/adr/` 1つ）とする。これはほとんどのリポジトリに合うため、質問せずに書く。
+
+モノレポの兆候が調査で見つかった場合だけ、**multi-context**（ルートの `CONTEXT-MAP.md` がコンテキストごとの `CONTEXT.md` を指す構成）を提示する。その後、どの配置にするか確認する。
+
+### 3. 確認して編集
+
+次のドラフトをユーザーに示す:
+
+- `CLAUDE.md` / `AGENTS.md` のどちらを編集するかを選び、追加する `## Agent skills` ブロック（選択規則は手順4を参照）
+- `docs/agents/issue-tracker.md`、`docs/agents/domain.md`、`docs/agents/triage-labels.md` の内容（最後のものは `triage` がインストールされている場合だけ）
+
+書き込む前にユーザーが編集できるようにする。
+
+### 4. 書き込む
+
+**編集するファイルを選ぶ:**
+
+- `CLAUDE.md` が存在する場合は、それを編集する。
+- それ以外で `AGENTS.md` が存在する場合は、それを編集する。
+- どちらも存在しない場合は、どちらを作成するかユーザーに尋ねる。自分で選ばない。
+
+`CLAUDE.md` がすでにあるときに `AGENTS.md` を作成してはならない（逆も同じ）。常にすでに存在する方を編集する。
+
+選んだファイルに `## Agent skills` ブロックがすでにある場合は、重複を追加せず、その内容をその場で更新する。周囲のセクションにあるユーザーの編集を上書きしない。
+
+ブロック:
+
+```markdown
+## Agent skills
+
+### Issue tracker
+
+[課題をどこで追跡しているかの一行要約]。`docs/agents/issue-tracker.md` を参照する。
+
+### Triage labels
+
+[ラベルの語彙の一行要約]。`docs/agents/triage-labels.md` を参照する。
+
+### Domain docs
+
+[配置の一行要約: "single-context" または "multi-context"]。`docs/agents/domain.md` を参照する。
+```
+
+`triage` がインストールされ、セクションBを実行した場合だけ、`### Triage labels` サブブロックを含め、`docs/agents/triage-labels.md` を書く。そうでなければ両方とも省略する。
+
+次に、このスキルフォルダーのシードテンプレートを出発点として、文書ファイルを書く:
+
+- [issue-tracker-github.md](./issue-tracker-github.md): GitHub課題トラッカー
+- [issue-tracker-gitlab.md](./issue-tracker-gitlab.md): GitLab課題トラッカー
+- [issue-tracker-local.md](./issue-tracker-local.md): ローカルMarkdown課題トラッカー
+- [triage-labels.md](./triage-labels.md): ラベル対応表（`triage` がインストールされている場合だけ）
+- [domain.md](./domain.md): ドメイン文書の利用規則と配置
+
+「その他」の課題トラッカーの場合は、ユーザーの説明を使って `docs/agents/issue-tracker.md` をゼロから書く。
+
+### 5. 完了
+
+セットアップが完了したことと、今後どのエンジニアリングスキルがこれらのファイルを読むかをユーザーに伝える。後から `docs/agents/*.md` を直接編集できることも伝える。課題トラッカーを切り替える、または最初からやり直す場合だけ、このスキルを再実行すればよい。

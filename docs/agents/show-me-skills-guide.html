@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matt Pocock スキル — show-me</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --border: #2d3a4f;
+      --text: #e7ecf3;
+      --muted: #9aa8bc;
+      --accent: #6cb6ff;
+      --green: #3fb950;
+      --amber: #d29922;
+      --pink: #f778ba;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 1.25rem;
+    }
+    h1 { font-size: 1.35rem; font-weight: 500; margin: 0 0 0.25rem; }
+    .lead { color: var(--muted); font-size: 0.95rem; margin: 0 0 1.5rem; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+    h2 { font-size: 0.85rem; font-weight: 500; text-transform: none; color: var(--accent); margin: 0 0 0.75rem; }
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .pill {
+      font-size: 0.8rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      background: #243044;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .pill.setup { border-color: var(--amber); color: var(--amber); }
+    .pill.router { border-color: var(--pink); }
+    .arrow { color: var(--muted); font-size: 0.75rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.5rem;
+    }
+    .card {
+      font-size: 0.78rem;
+      padding: 0.5rem 0.6rem;
+      border-radius: 6px;
+      background: #121a24;
+      border: 1px solid var(--border);
+    }
+    .card strong { display: block; color: var(--accent); font-weight: 500; margin-bottom: 0.2rem; }
+    .card span { color: var(--muted); font-size: 0.72rem; }
+    .cluster-title { font-size: 0.75rem; color: var(--muted); margin: 0.75rem 0 0.4rem; }
+    ul.compact { margin: 0; padding-left: 1.1rem; font-size: 0.85rem; color: var(--muted); }
+    code { font-size: 0.82em; color: var(--green); }
+    @media (max-width: 480px) {
+      .flow .arrow { display: none; }
+      .flow { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+  <h1>.agents/skills マップ</h1>
+  <p class="lead">チャットで <code>/名前</code> を呼ぶ。迷ったら <code>/ask-matt</code>。</p>
+
+  <section>
+    <h2>初回セットアップ</h2>
+    <div class="flow">
+      <span class="pill setup">/setup-matt-pocock-skills</span>
+      <span class="arrow">→</span>
+      <span class="pill">docs/agents/issue-tracker.md</span>
+      <span class="pill">triage-labels.md</span>
+      <span class="pill">domain.md</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>メインフロー（アイデア → 出荷）</h2>
+    <div class="flow">
+      <span class="pill">/grill-with-docs</span>
+      <span class="arrow">→</span>
+      <span class="pill">/handoff + /prototype</span>
+      <span class="arrow">（任意）</span>
+      <span class="pill">/to-spec</span>
+      <span class="arrow">→</span>
+      <span class="pill">/to-tickets</span>
+      <span class="arrow">→</span>
+      <span class="pill">/implement</span>
+    </div>
+    <p class="cluster-title">implement の内側</p>
+    <div class="flow">
+      <span class="pill">/tdd</span>
+      <span class="arrow">→</span>
+      <span class="pill">/code-review</span>
+    </div>
+    <p class="cluster-title">1セッションで足りる場合</p>
+    <div class="flow">
+      <span class="pill">/grill-with-docs</span>
+      <span class="arrow">→</span>
+      <span class="pill">/implement</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>導入路（ここからメインに合流）</h2>
+    <div class="grid">
+      <div class="card"><strong>/triage</strong><span>届いた課題 → implement</span></div>
+      <div class="card"><strong>/diagnosing-bugs</strong><span>難バグ → 修正 → code-review</span></div>
+      <div class="card"><strong>/wayfinder</strong><span>巨大案件の決定マップ → to-spec</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>wayfinder チケット → スキル</h2>
+    <div class="grid">
+      <div class="card"><strong>research</strong><span>/research</span></div>
+      <div class="card"><strong>prototype</strong><span>/prototype</span></div>
+      <div class="card"><strong>grilling</strong><span>/grilling + /domain-modeling</span></div>
+      <div class="card"><strong>task</strong><span>人間 or エージェント作業</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>語彙層（他スキルが読む）</h2>
+    <div class="grid">
+      <div class="card"><strong>/domain-modeling</strong><span>用語・CONTEXT・ADR</span></div>
+      <div class="card"><strong>/codebase-design</strong><span>deep module・seam</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>単独・横断</h2>
+    <div class="grid">
+      <div class="card"><strong>/grill-me</strong><span>リポ外・記録なしグリル</span></div>
+      <div class="card"><strong>/grilling</strong><span>質問プリミティブ</span></div>
+      <div class="card"><strong>/research</strong><span>調査をファイルに</span></div>
+      <div class="card"><strong>/to-questionnaire</strong><span>第三者への質問票</span></div>
+      <div class="card"><strong>/wizard</strong><span>人間だけの手順</span></div>
+      <div class="card"><strong>/wait-what</strong><span>説明の言い換え</span></div>
+      <div class="card"><strong>/handoff</strong><span>セッション間の文書</span></div>
+      <div class="card"><strong>/teach</strong><span>複数セッション学習</span></div>
+      <div class="card"><strong>/writing-for-agents</strong><span>スキル文書の書き方</span></div>
+      <div class="card"><strong>/improve-codebase-architecture</strong><span>深化候補 → grill-with-docs</span></div>
+      <div class="card"><strong>/resolving-merge-conflicts</strong><span>マージ競合</span></div>
+      <div class="card"><strong>/ask-matt</strong><span>ルーター</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>状況 → 最初の1コマンド</h2>
+    <ul class="compact">
+      <li>リポで新機能 → <code>/grill-with-docs</code></li>
+      <li>リポ外で考える → <code>/grill-me</code></li>
+      <li>課題が溜まった → <code>/triage</code></li>
+      <li>壊れている → <code>/diagnosing-bugs</code></li>
+      <li>巨大で不明 → <code>/wayfinder</code></li>
+      <li>誰かに聞く必要 → <code>/to-questionnaire</code></li>
+      <li>分からない → <code>/wait-what</code> または <code>/ask-matt</code></li>
+    </ul>
+  </section>
+</body>
+</html>

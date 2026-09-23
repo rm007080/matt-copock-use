@@ -1,0 +1,5 @@
+interface:
+  display_name: "To Spec"
+  short_description: "会話を仕様書にまとめる"
+policy:
+  allow_implicit_invocation: false

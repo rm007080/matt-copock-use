@@ -1,0 +1,5 @@
+interface:
+  display_name: "Wait What"
+  short_description: "不足している背景を補い、より簡単に説明し直す"
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Grill Me"
+  short_description: "質問を重ねて計画を磨き上げる"
+policy:
+  allow_implicit_invocation: false

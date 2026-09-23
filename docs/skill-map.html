@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>エージェントスキルの地図</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Shippori+Mincho:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1b3142;
+      --paper: #d7e6e8;
+      --station: #fffdf8;
+      --lane: #f4fafb;
+      --pocket: #f7fbfb;
+      --slash: #0e4d5c;
+      --sign: #f3ede4;
+      --measure: 68rem;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 1.0625rem;
+      line-height: 1.75;
+    }
+
+    .wrap {
+      max-width: var(--measure);
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    .eyebrow {
+      margin: 0 0 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 16em;
+      font-family: "Shippori Mincho", "Yu Mincho", serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+    }
+
+    .lede {
+      max-width: 38em;
+      margin: 1.25rem 0 0;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin: 1.75rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .legend li {
+      margin: 0;
+      padding: 0.85rem 0.9rem;
+      background: var(--station);
+      border: 2px solid var(--ink);
+    }
+
+    .legend li:nth-child(2) {
+      background: var(--pocket);
+      border-style: dashed;
+    }
+
+    .legend strong {
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    .legend span {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: 0.92rem;
+    }
+
+    .trail {
+      position: relative;
+      margin-top: 2.75rem;
+      padding-left: 1.6rem;
+    }
+
+    .trail::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.4rem;
+      bottom: 0.4rem;
+      width: 4px;
+      background: var(--ink);
+    }
+
+    .beat {
+      margin: 0 0 1.75rem;
+    }
+
+    .trailhead,
+    .station,
+    .lane,
+    .inner,
+    .notes,
+    .examples article {
+      background: var(--station);
+      border: 2px solid var(--ink);
+    }
+
+    .trailhead,
+    .station {
+      padding: 1rem 1.1rem 1.05rem;
+    }
+
+    .role {
+      margin: 0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    h2, h3, h4 {
+      margin: 0.15rem 0 0;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    h2 { font-size: 1.35rem; }
+    h3 { font-size: 1.15rem; }
+    h4 { font-size: 1rem; }
+
+    .call {
+      margin: 0.65rem 0 0;
+    }
+
+    code {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 0.95em;
+      font-weight: 500;
+      color: var(--slash);
+    }
+
+    .note {
+      margin: 0.55rem 0 0;
+      font-size: 0.95rem;
+    }
+
+    .inner {
+      margin-top: 0.9rem;
+      padding: 0.85rem 0.95rem 0.95rem;
+      background: var(--pocket);
+      border-style: dashed;
+    }
+
+    .stamp {
+      display: inline-block;
+      margin: 0 0 0.45rem;
+      padding: 0.05rem 0.45rem 0.12rem;
+      background: var(--ink);
+      color: var(--sign);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.6;
+    }
+
+    .inner ol {
+      margin: 0.35rem 0 0;
+      padding-left: 1.2rem;
+    }
+
+    .inner li + li {
+      margin-top: 0.65rem;
+    }
+
+    .inner-name,
+    .pass {
+      margin: 0.35rem 0 0;
+    }
+
+    .fork-sign {
+      margin-bottom: 0.85rem;
+      padding: 0.9rem 1rem;
+      background: var(--ink);
+      color: var(--sign);
+    }
+
+    .fork-sign h2,
+    .fork-sign p {
+      color: var(--sign);
+    }
+
+    .fork-q {
+      margin: 0.35rem 0 0;
+      font-family: "Shippori Mincho", "Yu Mincho", serif;
+      font-size: 1.35rem;
+      line-height: 1.45;
+    }
+
+    .equal {
+      margin: 0.35rem 0 0;
+      font-size: 0.92rem;
+    }
+
+    .lanes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      align-items: start;
+    }
+
+    .lane {
+      margin: 0;
+      padding: 0.95rem;
+      background: var(--lane);
+    }
+
+    .lane .station {
+      margin-top: 0.85rem;
+      background: var(--station);
+    }
+
+    .lane .station:first-of-type {
+      margin-top: 0.85rem;
+    }
+
+    .rejoin {
+      margin: 0.15rem 0 1.75rem;
+      font-weight: 700;
+    }
+
+    .notes,
+    .examples {
+      margin-top: 2.5rem;
+    }
+
+    .notes {
+      padding: 1rem 1.1rem 1.15rem;
+    }
+
+    .notes ul,
+    .scope {
+      margin: 0.6rem 0 0;
+      padding-left: 1.2rem;
+    }
+
+    .footnote {
+      margin: 0.9rem 0 0;
+      padding-top: 0.8rem;
+      border-top: 2px solid var(--ink);
+    }
+
+    .examples h2 {
+      margin-bottom: 0.85rem;
+    }
+
+    .examples article {
+      padding: 1rem 1.1rem 1.1rem;
+    }
+
+    .examples article + article {
+      margin-top: 0.85rem;
+    }
+
+    .answer {
+      margin: 0.7rem 0 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .answer code {
+      font-size: 1.05em;
+    }
+
+    .do-not {
+      margin: 0.35rem 0 0;
+    }
+
+    .walk-details summary {
+      display: block;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .walk-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .walk-details summary::marker {
+      content: "";
+    }
+
+    .walk-details summary:focus-visible {
+      outline: 3px solid var(--slash);
+      outline-offset: 4px;
+    }
+
+    .cue {
+      margin: 0.7rem 0 0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    .walk-details:not([open]) .when-open,
+    .walk-details[open] .when-closed {
+      display: none;
+    }
+
+    .walk {
+      margin: 0.9rem 0 0;
+      padding-top: 0.8rem;
+      border-top: 2px solid var(--ink);
+    }
+
+    .walk div + div {
+      margin-top: 0.55rem;
+    }
+
+    .walk dt {
+      margin: 0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    .walk dd {
+      margin: 0.15rem 0 0;
+    }
+
+    .outside {
+      margin-top: 2.5rem;
+    }
+
+    .outside > p {
+      max-width: 38em;
+    }
+
+    .outside .station + .station {
+      margin-top: 0.85rem;
+    }
+
+    @media (max-width: 960px) {
+      .legend {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .legend,
+      .lanes {
+        grid-template-columns: 1fr;
+      }
+
+      .wrap {
+        padding-top: 1.5rem;
+      }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .wrap { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">エージェントスキルの地図</p>
+      <h1>次に打つのは、実線の地点だけ。</h1>
+      <p class="lede">破線の内側は、その会話の中でエージェントが行うこと。枝は二つとも同じ強さで、条件に当てはまる方へ進む。あらかじめ太い道はない。地点を選ぶと歩き方の三行が開く。開いているのは一つだけ。</p>
+      <p class="lede">例は、次の五つの地点をこの順で開く。アイデアがまだふわっとしている。試作用のチャットへ渡す。見ないと決まらないことを確かめる。わかったことを、元の会話へ戻す。同じチャットで作り切る。</p>
+      <ul class="legend">
+        <li>
+          <strong>地点</strong>
+          <span>実線。自分で次に呼ぶ。</span>
+        </li>
+        <li>
+          <strong>内側の箱</strong>
+          <span>破線。見えるが、打たない。</span>
+        </li>
+        <li>
+          <strong>枝</strong>
+          <span>条件が真のときだけ進む。同じ強さ。</span>
+        </li>
+        <li>
+          <strong>歩き方</strong>
+          <span>地点を選ぶと開く三行。一つだけ。</span>
+        </li>
+      </ul>
+    </header>
+
+    <div class="trail">
+      <section class="beat">
+        <div class="trailhead">
+          <p class="role">はじまり</p>
+          <h2>プロジェクトのフォルダを開いている</h2>
+          <p class="note">ここで打つものはない。この地図は、作業するフォルダを開いたあとの道。</p>
+        </div>
+      </section>
+
+      <section class="beat">
+        <article class="station">
+          <details class="walk-details" name="walk">
+            <summary>
+              <p class="role">地点</p>
+              <h2>アイデアがまだふわっとしている</h2>
+              <p class="call">次に打つ <code>/grill-with-docs</code></p>
+              <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+            </summary>
+            <div class="walk">
+              <dl>
+                <div>
+                  <dt>答えること</dt>
+                  <dd>今日やることの一枚にする。消すか線を引くかは、まだ決めない。</dd>
+                </div>
+                <div>
+                  <dt>残るファイル</dt>
+                  <dd><code>CONTEXT.md</code>。戻しにくい判断のときは ADR。</dd>
+                </div>
+                <div>
+                  <dt>終える条件</dt>
+                  <dd>一枚のページだと決まり、画面を見ないと決まらないことだけが残っている。</dd>
+                </div>
+              </dl>
+            </div>
+          </details>
+          <aside class="inner">
+            <p class="stamp">打たない</p>
+            <p class="role">内側の箱</p>
+            <ol>
+              <li>
+                <h4>質問を重ねる</h4>
+                <p class="inner-name">内側の名前: grilling</p>
+              </li>
+              <li>
+                <h4>用語を CONTEXT.md に残す</h4>
+                <p class="inner-name">内側の名前: domain-modeling</p>
+              </li>
+            </ol>
+          </aside>
+        </article>
+      </section>
+
+      <section class="beat" aria-labelledby="fork-see">
+        <div class="fork-sign" id="fork-see">
+          <p class="role">分かれ道</p>
+          <p class="fork-q">話しているだけで決められるか</p>
+          <p class="equal">二つの枝は同じ強さ。当てはまる方へ進む。</p>
+        </div>
+        <div class="lanes">
+          <section class="lane">
+            <h3>話しているだけで決められる</h3>
+            <p class="pass">ここで打つものはない。次の分かれ道へ進む。</p>
+          </section>
+          <section class="lane">
+            <h3>画面の見た目・動き・データの形を見ないと決められない</h3>
+            <article class="station">
+              <details class="walk-details" name="walk">
+                <summary>
+                  <p class="role">地点</p>
+                  <h3>試作用のチャットへ渡す</h3>
+                  <p class="call">次に打つ <code>/handoff</code></p>
+                  <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+                </summary>
+                <div class="walk">
+                  <dl>
+                    <div>
+                      <dt>答えること</dt>
+                      <dd>消すか線を引くかを、画面で見比べる。</dd>
+                    </div>
+                    <div>
+                      <dt>残るファイル</dt>
+                      <dd>パソコンの一時フォルダに、引き継ぎの文書。</dd>
+                    </div>
+                    <div>
+                      <dt>終える条件</dt>
+                      <dd>その文書を、新しいチャットで開いている。</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+            </article>
+            <article class="station">
+              <details class="walk-details" name="walk">
+                <summary>
+                  <p class="role">地点</p>
+                  <h3>見ないと決まらないことを、使い捨てで確かめる</h3>
+                  <p class="call">次に打つ <code>/prototype</code></p>
+                  <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+                </summary>
+                <div class="walk">
+                  <dl>
+                    <div>
+                      <dt>答えること</dt>
+                      <dd>線を引いて残す。</dd>
+                    </div>
+                    <div>
+                      <dt>残るファイル</dt>
+                      <dd>捨てる試作。本番のページにはしない。</dd>
+                    </div>
+                    <div>
+                      <dt>終える条件</dt>
+                      <dd>線を引いて残す、と決まっている。</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+            </article>
+            <article class="station">
+              <details class="walk-details" name="walk">
+                <summary>
+                  <p class="role">地点</p>
+                  <h3>わかったことを、元の会話へ戻す</h3>
+                  <p class="call">次に打つ <code>/handoff</code></p>
+                  <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+                </summary>
+                <div class="walk">
+                  <dl>
+                    <div>
+                      <dt>答えること</dt>
+                      <dd>線を引いて残す、と決まった。</dd>
+                    </div>
+                    <div>
+                      <dt>残るファイル</dt>
+                      <dd>パソコンの一時フォルダに、戻すための引き継ぎの文書。</dd>
+                    </div>
+                    <div>
+                      <dt>終える条件</dt>
+                      <dd>元のチャットで、その決定を開いている。</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+            </article>
+          </section>
+        </div>
+      </section>
+
+      <p class="rejoin">どちらの枝からも、次の分かれ道へ進む。</p>
+
+      <section class="beat" aria-labelledby="fork-day">
+        <div class="fork-sign" id="fork-day">
+          <p class="role">分かれ道</p>
+          <p class="fork-q">今日このチャットで作り切れるか</p>
+          <p class="equal">二つの枝は同じ強さ。当てはまる方へ進む。</p>
+        </div>
+        <div class="lanes">
+          <section class="lane">
+            <h3>今日このチャットで作り切れる</h3>
+            <article class="station">
+              <details class="walk-details" name="walk">
+                <summary>
+                  <p class="role">地点</p>
+                  <h3>同じチャットで作り切る</h3>
+                  <p class="call">次に打つ <code>/implement</code></p>
+                  <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+                </summary>
+                <div class="walk">
+                  <dl>
+                    <div>
+                      <dt>答えること</dt>
+                      <dd>今日やることの一枚を、線を引いて残す形で作る。</dd>
+                    </div>
+                    <div>
+                      <dt>残るファイル</dt>
+                      <dd>そのページと、それを記録したコミット。</dd>
+                    </div>
+                    <div>
+                      <dt>終える条件</dt>
+                      <dd>ページで、終えた項目に線が引ける。</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+              <aside class="inner">
+                <p class="stamp">打たない</p>
+                <p class="role">内側の箱</p>
+                <ol>
+                  <li>
+                    <h4>テストを先に書く</h4>
+                    <p class="inner-name">内側の名前: tdd</p>
+                  </li>
+                  <li>
+                    <h4>終える前に見直しをする</h4>
+                    <p class="inner-name">内側の名前: code-review</p>
+                  </li>
+                </ol>
+              </aside>
+            </article>
+          </section>
+          <section class="lane">
+            <h3>今日中に作り切れない、または別の日に続きをやる</h3>
+            <article class="station">
+              <details class="walk-details" name="walk">
+                <summary>
+                  <p class="role">地点</p>
+                  <h3>ここまでの会話を仕様にまとめる</h3>
+                  <p class="call">次に打つ <code>/to-spec</code></p>
+                  <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+                </summary>
+                <div class="walk">
+                  <dl>
+                    <div>
+                      <dt>答えること</dt>
+                      <dd>今日は作り切れないので、決まったことを仕様にする。今日やることの一枚は、ここを通らない。</dd>
+                    </div>
+                    <div>
+                      <dt>残るファイル</dt>
+                      <dd><code>.scratch/</code> の仕様書。</dd>
+                    </div>
+                    <div>
+                      <dt>終える条件</dt>
+                      <dd>仕様が課題の場所にあり、新しい質問はしていない。</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+            </article>
+            <article class="station">
+              <details class="walk-details" name="walk">
+                <summary>
+                  <p class="role">地点</p>
+                  <h3>仕様を、小さい実装の単位に分ける</h3>
+                  <p class="call">次に打つ <code>/to-tickets</code></p>
+                  <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+                </summary>
+                <div class="walk">
+                  <dl>
+                    <div>
+                      <dt>答えること</dt>
+                      <dd>仕様を、小さい実装の単位に分ける。今日やることの一枚は、ここを通らない。</dd>
+                    </div>
+                    <div>
+                      <dt>残るファイル</dt>
+                      <dd><code>.scratch/</code> のチケット。</dd>
+                    </div>
+                    <div>
+                      <dt>終える条件</dt>
+                      <dd>単位が分かれ、どれが先かが書いてある。グリルからここまでは、同じチャット。</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+            </article>
+            <article class="station">
+              <details class="walk-details" name="walk">
+                <summary>
+                  <p class="role">地点</p>
+                  <h3>単位ごとに、新しいチャットで作る</h3>
+                  <p class="call">次に打つ <code>/implement</code></p>
+                  <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+                </summary>
+                <div class="walk">
+                  <dl>
+                    <div>
+                      <dt>答えること</dt>
+                      <dd>チケットを一つ、新しいチャットで作る。今日やることの一枚は、ここを通らない。</dd>
+                    </div>
+                    <div>
+                      <dt>残るファイル</dt>
+                      <dd>そのチケットのコードと、それを記録したコミット。</dd>
+                    </div>
+                    <div>
+                      <dt>終える条件</dt>
+                      <dd>そのチケットで約束したことができている。</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+              <aside class="inner">
+                <p class="stamp">打たない</p>
+                <p class="role">内側の箱</p>
+                <ol>
+                  <li>
+                    <h4>テストを先に書く</h4>
+                    <p class="inner-name">内側の名前: tdd</p>
+                  </li>
+                  <li>
+                    <h4>終える前に見直しをする</h4>
+                    <p class="inner-name">内側の名前: code-review</p>
+                  </li>
+                </ol>
+              </aside>
+            </article>
+          </section>
+        </div>
+      </section>
+    </div>
+
+    <section class="notes" aria-labelledby="notes-title">
+      <h2 id="notes-title">道の読み方</h2>
+      <ul>
+        <li>グリルから <code>/to-tickets</code> までは、同じチャットで進む。実装を分けるときは、チケットごとに新しいチャットを開く。</li>
+        <li><code>/clear</code> と codebase-design は、この地図の箱ではない。codebase-design は <code>/improve-codebase-architecture</code> の会話の中で使う語彙。</li>
+      </ul>
+    </section>
+
+    <section class="outside" aria-labelledby="outside-title">
+      <h2 id="outside-title">地図の外</h2>
+      <p>条件が真のときだけ、自分で呼ぶ地点。歩き方の形は、道の上と同じ。</p>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>別のプロジェクトで、初めて使う</h3>
+            <p class="call">次に打つ <code>/setup-matt-pocock-skills</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>別のプロジェクトで、エージェントスキルを初めて使う。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd><code>docs/agents/</code> の課題の置き場所と、<code>AGENTS.md</code> の案内。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>課題をどこに書くかと、用語集の置き場所が決まっている。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>次にどれを呼ぶか、まだ決められない</h3>
+            <p class="call">次に打つ <code>/ask-matt</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>次にどれを呼ぶか、まだ決められない。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd>ファイルは残らない。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>次に呼ぶ地点が、一つ決まっている。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>壊れている、または遅い</h3>
+            <p class="call">次に打つ <code>/diagnosing-bugs</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>ページが壊れている、または遅い。直るまで原因を追う。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd>再発を防ぐテスト。原因が残る場所がなければ、その記録。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>元の手順では、もう壊れていない。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>質問だけで詰めたい</h3>
+            <p class="call">次に打つ <code>/grill-me</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>質問だけで詰めたい。用語集は残さない。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd>ファイルは残らない。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>決めることが残っていない。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>一つのチャットでは道が見えない</h3>
+            <p class="call">次に打つ <code>/wayfinder</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>一つのチャットでは道が見えない。目的地までの決定を、一つずつ決める。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd>課題の場所にある、道筋のマップ。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>実行の前に決めることが、残っていない。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>一次資料で事実を集めたい</h3>
+            <p class="call">次に打つ <code>/research</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>一次資料に照らして、この問いの事実を集めたい。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd>出典つきの Markdown。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>主張ごとに、出典が書いてある。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>このフォルダで、一つの話題を学びたい</h3>
+            <p class="call">次に打つ <code>/teach</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>このフォルダで、一つの話題を学びたい。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd><code>MISSION.md</code> と、レッスンの HTML。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>なぜ学ぶかが一文で残っている。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>別の人に決めてもらう</h3>
+            <p class="call">次に打つ <code>/to-questionnaire</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>自分では決められないことを、別の人に記入してもらう。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd><code>to-questionnaire-</code> ではじまる Markdown。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>決めてほしいことが、質問として並んでいる。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>届いた課題の扱いを決める</h3>
+            <p class="call">次に打つ <code>/triage</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>届いた課題を、次にどう扱うか分類する。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd>課題の状態。却下するときは <code>.out-of-scope/</code> のメモ。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>その課題の次の扱いが、一つに決まっている。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>マージの競合が起きている</h3>
+            <p class="call">次に打つ <code>/resolving-merge-conflicts</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>マージまたはリベースの競合が、いま起きている。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd>競合を解消したファイル。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>競合が残っていない。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>人にしかできない手順がある</h3>
+            <p class="call">次に打つ <code>/wizard</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>人にしかできない手順を、順に案内してほしい。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd>一回きりのウィザード。終わったら消す。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>人の操作が終わり、秘密の値は環境変数に入っている。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>次の変更が楽になる場所を見たい</h3>
+            <p class="call">次に打つ <code>/improve-codebase-architecture</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>コードのどこを深くすると、次の変更が楽になるか見たい。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd>パソコンの一時フォルダに、候補の HTML。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>検討する候補を、一つ選んでいる。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>エージェントが読む文書を書く</h3>
+            <p class="call">次に打つ <code>/writing-for-agents</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>エージェントが読む文書を書く。スキル、または <code>AGENTS.md</code>。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd>その文書。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>エージェントが、いつその文書を読むかが書いてある。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点</p>
+            <h3>直前の説明が理解できなかった</h3>
+            <p class="call">次に打つ <code>/wait-what</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>直前の説明が、理解できなかった。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd>ファイルは残らない。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>同じ内容を、用語集の言葉で説明し直している。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+
+      <article class="station">
+        <details class="walk-details" name="walk">
+          <summary>
+            <p class="role">地点 · 二役</p>
+            <h3>実装の外で、ブランチを見直す</h3>
+            <p class="call">次に打つ <code>/code-review</code></p>
+            <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+          </summary>
+          <div class="walk">
+            <dl>
+              <div>
+                <dt>答えること</dt>
+                <dd>実装の外で、このブランチをレビューしてほしい。</dd>
+              </div>
+              <div>
+                <dt>残るファイル</dt>
+                <dd>ファイルは残らない。</dd>
+              </div>
+              <div>
+                <dt>終える条件</dt>
+                <dd>規約と仕様の二つの見直しが、チャットに出ている。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </article>
+    </section>
+  </div>
+</body>
+</html>

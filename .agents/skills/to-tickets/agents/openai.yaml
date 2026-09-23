@@ -1,0 +1,5 @@
+interface:
+  display_name: "To Tickets"
+  short_description: "計画を最小の縦断実装のチケットに分割する"
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Handoff"
+  short_description: "会話を引き継ぎ文書にまとめる"
+policy:
+  allow_implicit_invocation: false
