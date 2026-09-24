@@ -2,7 +2,7 @@
 
 ### Issue tracker
 
-課題（issue）と仕様書（spec）は、`.scratch/` 配下のローカルMarkdownファイルで管理する。`docs/agents/issue-tracker.md` を参照する。
+作業資料は `docs/work/` 配下のローカルMarkdownで管理する。作業フォルダーの特定・採番、実装課題と調査課題の扱いは `docs/agents/issue-tracker.md` を参照する。
 
 ### Triage labels
 
@@ -10,4 +10,4 @@
 
 ### Domain docs
 
-リポジトリのルートに、ドメインの文脈（context）を1つ置く。`CONTEXT.md` と `docs/adr/` を使う。`docs/agents/domain.md` を参照する。
+全体要求は `docs/spec.md`、目標構成は `docs/architecture.md`、採用技術は `docs/tech-stack.md` に置く。用語集はルートの `CONTEXT.md`、設計判断記録は `docs/adr/` を使う。各文書の参照・更新条件は `docs/agents/domain.md` を参照する。

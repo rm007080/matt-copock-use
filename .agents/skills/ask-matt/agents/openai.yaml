@@ -1,5 +1,5 @@
 interface:
   display_name: "Ask Matt"
-  short_description: "状況に合うスキルまたはフローを見つける"
+  short_description: "今の状況に合うスキルと、仕様・計画・実装へ進む道筋を案内する"
 policy:
   allow_implicit_invocation: false

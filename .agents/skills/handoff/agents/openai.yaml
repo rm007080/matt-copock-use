@@ -1,5 +1,5 @@
 interface:
   display_name: "Handoff"
-  short_description: "会話を引き継ぎ文書にまとめる"
+  short_description: "会話と作業状態を、リポジトリ内の日付付き引き継ぎ文書に保存する"
 policy:
   allow_implicit_invocation: false

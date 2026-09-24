@@ -1,5 +1,5 @@
 interface:
   display_name: "Setup Matt Pocock Skills"
-  short_description: "リポジトリをスキル用に設定する"
+  short_description: "課題管理と全体文書・作業資料の配置を、リポジトリに合わせて設定する"
 policy:
   allow_implicit_invocation: false

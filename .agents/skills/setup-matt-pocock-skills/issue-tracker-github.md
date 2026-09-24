@@ -1,6 +1,12 @@
 # 課題トラッカー: GitHub
 
-このリポジトリの課題と仕様はGitHub Issuesにある。すべての操作に `gh` CLIを使う。
+このリポジトリの課題はGitHub Issuesにある。すべての操作に `gh` CLIを使う。
+
+## 全体文書とローカル計画
+
+全体要求の正本は `docs/spec.md`。目標構成は `docs/architecture.md`、採用技術は `docs/tech-stack.md` に置き、`/to-spec` が作成・更新する。これらは外部Issuesへ仕様として投稿しない。
+
+任意の実装計画は `docs/work/YYYY-MM-DD-NN-<work-slug>/<work-slug>-implementation-plan.md` に保存する。セットアップ時に、ローカルひな形の「配置」「作業フォルダーの特定と作成」を出力先の規約へ取り込み、作成日・採番・再利用を定義する。実装課題とWayfinder課題の発行・取得・依存関係は、この文書の外部トラッカー方式を維持する。
 
 ## 規約
 

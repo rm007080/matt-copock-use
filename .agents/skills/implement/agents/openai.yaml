@@ -1,5 +1,5 @@
 interface:
   display_name: "Implement"
-  short_description: "仕様書やチケットに基づいて実装する"
+  short_description: "仕様・計画・チケットの対象範囲を実装し、検証とレビューを行う"
 policy:
   allow_implicit_invocation: false

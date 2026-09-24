@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 - **課題トラッカー（issue tracker）**: 課題を置く場所（既定はGitHub。ローカルMarkdownもそのまま使える）
 - **トリアージラベル**: 5つの標準トリアージ役割に使う文字列
-- **ドメイン文書**: `CONTEXT.md` とADRを置く場所、およびそれらを読むときの規則
+- **プロジェクト文書**: 全体要求・目標構成・採用技術と、`CONTEXT.md`・ADRの配置・参照規則
 
 これは決定的なスクリプトではなく、プロンプト駆動のスキルである。調査し、見つけたものを示し、ユーザーに確認してから書き込む。
 
@@ -25,7 +25,7 @@ disable-model-invocation: true
 - リポジトリルートの `CONTEXT.md` と `CONTEXT-MAP.md`
 - `docs/adr/` と `src/*/docs/adr/` ディレクトリ
 - `docs/agents/`: このスキルが以前に出力したものがすでにあるか。
-- `.scratch/`: ローカルMarkdown課題トラッカーの規約をすでに使っている兆候
+- `docs/spec.md`、`docs/architecture.md`、`docs/tech-stack.md`、`docs/work/`: 全体文書と作業資料の既存規約。ユーザーが旧資料を明示した場合は読み取り、無断で移動しない
 - `triage` スキルがインストールされているか（このスキルと並ぶ `triage` スキルフォルダー、または利用可能なスキルに `triage` があるか）。これでセクションBを実行するか決まる。
 - モノレポの兆候: `pnpm-workspace.yaml`、`package.json` の `workspaces` フィールド、または独自の `src/` を持つ `packages/*` が埋まっている状態。これらは本当に大規模なマルチパッケージリポジトリにだけ存在し、不在なら `single-context`（単一コンテキスト）である（ほとんどのリポジトリが該当する）。
 
@@ -41,13 +41,13 @@ disable-model-invocation: true
 
 **セクションA: 課題トラッカー。**
 
-> 説明: 「課題トラッカー」とは、このリポジトリの課題を置く場所である。`to-tickets`、`triage`、`to-spec` などのスキルは、そこから課題を読み書きする。`gh issue create` を呼ぶのか、`.scratch/` 以下にMarkdownファイルを書くのか、別のワークフローに従うのかを知る必要がある。このリポジトリで実際に作業を追跡している場所を選ぶ。
+> 説明: 「課題トラッカー」とは、このリポジトリの課題を置く場所である。`to-tickets`、`triage`、`wayfinder` などのスキルは、そこから課題を読み書きする。`gh issue create` を呼ぶのか、`docs/work/` の対象作業にMarkdown課題を書くのか、別のワークフローに従うのかを知る必要がある。このリポジトリで実際に作業を追跡している場所を選ぶ。
 
 既定の姿勢: これらのスキルはGitHub向けに設計されている。`git remote` がGitHubを指していれば、GitHubを提案する。`git remote` がGitLab（`gitlab.com` またはセルフホストのホスト）を指していれば、GitLabを提案する。それ以外（またはユーザーが望む場合）は、次を提示する:
 
 - **GitHub**: 課題はリポジトリのGitHub Issuesに置く（`gh` CLIを使う）
 - **GitLab**: 課題はリポジトリのGitLab Issuesに置く（[`glab`](https://gitlab.com/gitlab-org/cli) CLIを使う）
-- **ローカルMarkdown**: 課題はこのリポジトリの `.scratch/<feature>/` 以下にファイルとして置く（個人プロジェクト、またはリモートのないリポジトリに向く）
+- **ローカルMarkdown**: 課題はこのリポジトリの `docs/work/YYYY-MM-DD-NN-<work-slug>/issues/` にファイルとして置く（個人プロジェクト、またはリモートのないリポジトリに向く）
 - **その他**（Jira、Linearなど）: ユーザーにワークフローを一段落で説明してもらう。スキルはそれを自由記述として記録する。
 
 選択結果を `docs/agents/issue-tracker.md` に記録する。GitHubとGitLabのテンプレートには「PRを依頼受付面にする」フラグがあり、既定値は **off** である。offのままにし、話題に出さない。外部PRをtriageキューに入れたいユーザーは、後でファイルのフラグを変更できる。
@@ -63,6 +63,8 @@ disable-model-invocation: true
 **セクションC: ドメイン文書。** 既定は **single-context**（ルートに `CONTEXT.md` 1つと `docs/adr/` 1つ）とする。これはほとんどのリポジトリに合うため、質問せずに書く。
 
 モノレポの兆候が調査で見つかった場合だけ、**multi-context**（ルートの `CONTEXT-MAP.md` がコンテキストごとの `CONTEXT.md` を指す構成）を提示する。その後、どの配置にするか確認する。
+
+全体要求は `docs/spec.md`、目標構成は `docs/architecture.md`、採用技術は `docs/tech-stack.md` とする。セットアップでは配置・参照規約だけを整え、内容のない全体文書や作業フォルダーを先行作成しない。全体文書は `/to-spec`、任意の実装計画は `/to-plan` が作る。計画を含むローカル作業資料の保存規約は、課題トラッカーが外部サービスでも [issue-tracker-local.md](./issue-tracker-local.md) の「配置」「作業フォルダーの特定と作成」を採用する。外部課題の発行・取得方法は選択したトラッカーの規約を維持する。
 
 ### 3. 確認して編集
 
@@ -100,7 +102,7 @@ disable-model-invocation: true
 
 ### Domain docs
 
-[配置の一行要約: "single-context" または "multi-context"]。`docs/agents/domain.md` を参照する。
+全体要求・目標構成・採用技術は `docs/spec.md`、`docs/architecture.md`、`docs/tech-stack.md`。用語集・ADRは [single-context または multi-context の配置]。参照・更新条件は `docs/agents/domain.md` を参照する。
 ```
 
 `triage` がインストールされ、セクションBを実行した場合だけ、`### Triage labels` サブブロックを含め、`docs/agents/triage-labels.md` を書く。そうでなければ両方とも省略する。
@@ -113,7 +115,9 @@ disable-model-invocation: true
 - [triage-labels.md](./triage-labels.md): ラベル対応表（`triage` がインストールされている場合だけ）
 - [domain.md](./domain.md): ドメイン文書の利用規則と配置
 
-「その他」の課題トラッカーの場合は、ユーザーの説明を使って `docs/agents/issue-tracker.md` をゼロから書く。
+「その他」の課題トラッカーの場合は、ユーザーの説明を使って `docs/agents/issue-tracker.md` を書く。どのトラッカーでも、ローカル計画の作業フォルダー・採番・再利用の規則を含める。
+
+保存後に規約・AGENTS/CLAUDEの案内・既存資料への参照を読み戻し、同じ保存先と文書責務を示していることを確認する。
 
 ### 5. 完了
 

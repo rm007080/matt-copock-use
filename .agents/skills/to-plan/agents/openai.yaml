@@ -1,0 +1,5 @@
+interface:
+  display_name: "To Plan"
+  short_description: "合意した要件と既存コードから、実装手順と検証方法を計画にまとめる"
+policy:
+  allow_implicit_invocation: false

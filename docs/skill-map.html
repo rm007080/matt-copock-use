@@ -484,7 +484,7 @@
                     </div>
                     <div>
                       <dt>残るファイル</dt>
-                      <dd>パソコンの一時フォルダに、引き継ぎの文書。</dd>
+                      <dd><code>handoff/YYYY-MM-DD-NN-topic.md</code> に引き継ぎの文書。</dd>
                     </div>
                     <div>
                       <dt>終える条件</dt>
@@ -536,7 +536,7 @@
                     </div>
                     <div>
                       <dt>残るファイル</dt>
-                      <dd>パソコンの一時フォルダに、戻すための引き継ぎの文書。</dd>
+                      <dd><code>handoff/YYYY-MM-DD-NN-topic.md</code> に戻すための引き継ぎの文書。</dd>
                     </div>
                     <div>
                       <dt>終える条件</dt>
@@ -551,6 +551,74 @@
       </section>
 
       <p class="rejoin">どちらの枝からも、次の分かれ道へ進む。</p>
+
+      <section class="beat" aria-labelledby="prepare-docs">
+        <div class="fork-sign" id="prepare-docs">
+          <p class="role">必要なときだけ</p>
+          <p class="fork-q">全体の説明や、作業の計画を残す</p>
+          <p class="equal">片方でも両方でもよい。文書を作らず次へ進むこともできる。</p>
+        </div>
+        <div class="lanes">
+          <section class="lane">
+            <h3>プロジェクト全体を説明する</h3>
+            <article class="station">
+              <details class="walk-details" name="walk">
+                <summary>
+                  <p class="role">地点</p>
+                  <h3>全体の要求・構成・技術を残す</h3>
+                  <p class="call">次に打つ <code>/to-spec</code></p>
+                  <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+                </summary>
+                <div class="walk">
+                  <dl>
+                    <div>
+                      <dt>答えること</dt>
+                      <dd>全体の説明を残したいときに使う。会話で決まった要求と、構成・採用技術をまとめる。</dd>
+                    </div>
+                    <div>
+                      <dt>残るファイル</dt>
+                      <dd><code>docs/spec.md</code>、<code>docs/architecture.md</code>、<code>docs/tech-stack.md</code>。</dd>
+                    </div>
+                    <div>
+                      <dt>終える条件</dt>
+                      <dd>3文書と構成の図が保存され、未決は下書きとして分かる。新しい質問はしない。</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+            </article>
+          </section>
+          <section class="lane">
+            <h3>今回の作業を具体化する</h3>
+            <article class="station">
+              <details class="walk-details" name="walk">
+                <summary>
+                  <p class="role">地点・任意</p>
+                  <h3>作業の実装計画を残す</h3>
+                  <p class="call">必要なら打つ <code>/to-plan</code></p>
+                  <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
+                </summary>
+                <div class="walk">
+                  <dl>
+                    <div>
+                      <dt>答えること</dt>
+                      <dd>今回どこまで作り、どの順序で何を確認するか。重要な未決判断だけ1問ずつ確認する。仕様書は任意。</dd>
+                    </div>
+                    <div>
+                      <dt>残るファイル</dt>
+                      <dd><code>docs/work/2026-09-24-01-account-export/account-export-implementation-plan.md</code>（例）。作業名は英小文字・数字・ハイフンで付け、日付はフォルダー作成日で固定する。</dd>
+                    </div>
+                    <div>
+                      <dt>終える条件</dt>
+                      <dd>受け入れ条件・手順・検証方法が決まり、関連文書との同期も確認できた。未決や未保存は完了にしない。Planモードでは会話に表示し、未保存と伝える。</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+            </article>
+          </section>
+        </div>
+      </section>
 
       <section class="beat" aria-labelledby="fork-day">
         <div class="fork-sign" id="fork-day">
@@ -577,11 +645,11 @@
                     </div>
                     <div>
                       <dt>残るファイル</dt>
-                      <dd>そのページと、それを記録したコミット。</dd>
+                      <dd>今回のコードと検証結果、存在する計画の進捗、コミット。</dd>
                     </div>
                     <div>
                       <dt>終える条件</dt>
-                      <dd>ページで、終えた項目に線が引ける。</dd>
+                      <dd>合意した今回の範囲を実装・検証・レビューできた。</dd>
                     </div>
                   </dl>
                 </div>
@@ -604,37 +672,12 @@
           </section>
           <section class="lane">
             <h3>今日中に作り切れない、または別の日に続きをやる</h3>
+
             <article class="station">
               <details class="walk-details" name="walk">
                 <summary>
                   <p class="role">地点</p>
-                  <h3>ここまでの会話を仕様にまとめる</h3>
-                  <p class="call">次に打つ <code>/to-spec</code></p>
-                  <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
-                </summary>
-                <div class="walk">
-                  <dl>
-                    <div>
-                      <dt>答えること</dt>
-                      <dd>今日は作り切れないので、決まったことを仕様にする。今日やることの一枚は、ここを通らない。</dd>
-                    </div>
-                    <div>
-                      <dt>残るファイル</dt>
-                      <dd><code>.scratch/</code> の仕様書。</dd>
-                    </div>
-                    <div>
-                      <dt>終える条件</dt>
-                      <dd>仕様が課題の場所にあり、新しい質問はしていない。</dd>
-                    </div>
-                  </dl>
-                </div>
-              </details>
-            </article>
-            <article class="station">
-              <details class="walk-details" name="walk">
-                <summary>
-                  <p class="role">地点</p>
-                  <h3>仕様を、小さい実装の単位に分ける</h3>
+                  <h3>今回の作業を、小さい実装の単位に分ける</h3>
                   <p class="call">次に打つ <code>/to-tickets</code></p>
                   <p class="cue"><span class="when-closed">歩き方を開く</span><span class="when-open">歩き方を閉じる</span></p>
                 </summary>
@@ -642,15 +685,15 @@
                   <dl>
                     <div>
                       <dt>答えること</dt>
-                      <dd>仕様を、小さい実装の単位に分ける。今日やることの一枚は、ここを通らない。</dd>
+                      <dd>計画・全体仕様・会話から今回の範囲を選び、単体で確認できる小さな作業に分ける。計画は必須ではない。</dd>
                     </div>
                     <div>
                       <dt>残るファイル</dt>
-                      <dd><code>.scratch/</code> のチケット。</dd>
+                      <dd>同じ <code>docs/work/2026-09-24-01-account-export/issues/</code> のチケット。</dd>
                     </div>
                     <div>
                       <dt>終える条件</dt>
-                      <dd>単位が分かれ、どれが先かが書いてある。グリルからここまでは、同じチャット。</dd>
+                      <dd>対象範囲の未決が解消し、受け入れ条件・対象外・依存先が書いてある。未決があれば保存前に止まる。</dd>
                     </div>
                   </dl>
                 </div>
@@ -676,7 +719,7 @@
                     </div>
                     <div>
                       <dt>終える条件</dt>
-                      <dd>そのチケットで約束したことができている。</dd>
+                      <dd>そのチケットの受け入れ条件を検証・レビューできた。全体仕様の無関係な未実装機能は対象にしない。</dd>
                     </div>
                   </dl>
                 </div>
@@ -704,7 +747,9 @@
     <section class="notes" aria-labelledby="notes-title">
       <h2 id="notes-title">道の読み方</h2>
       <ul>
-        <li>グリルから <code>/to-tickets</code> までは、同じチャットで進む。実装を分けるときは、チケットごとに新しいチャットを開く。</li>
+        <li>全体の要求は <code>docs/spec.md</code>、構成は <code>docs/architecture.md</code>、技術は <code>docs/tech-stack.md</code>。個別の計画と実装チケットは同じ日付付き作業フォルダーへ置く。調査課題はその中の <code>discovery/</code> へ分ける。</li>
+        <li>後日同じリポジトリで再開する記録にも <code>/handoff</code> を使える。保存は毎回新しい日付・連番のファイルで、自動送信やコミットはしない。</li>
+        <li>グリルから必要な文書化・<code>/to-tickets</code> までは、同じチャットで進む。実装を分けるときは、チケットごとに新しいチャットを開く。</li>
         <li><code>/clear</code> と codebase-design は、この地図の箱ではない。codebase-design は <code>/improve-codebase-architecture</code> の会話の中で使う語彙。</li>
       </ul>
     </section>

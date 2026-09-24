@@ -1,5 +1,5 @@
 interface:
   display_name: "To Spec"
-  short_description: "会話を仕様書にまとめる"
+  short_description: "全体要求・構成図・主要技術の3文書を、合意した内容から作成・更新する"
 policy:
   allow_implicit_invocation: false
