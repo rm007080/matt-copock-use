@@ -1,0 +1,32 @@
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# エディタの一時ファイル
+.idea/
+*.swp
+*~
+
+# 認証情報（ウィザードが .env へ書く）
+.env
+.env.*
+!.env.example
+
+# 作業用の一時出力（workflow smoke など）
+tmp/
+
+# Python の試作・検証
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node の依存
+node_modules/
