@@ -1,0 +1,5 @@
+interface:
+  display_name: "To Readme"
+  short_description: "コード・設定・資料から、概要と導入・基本利用を案内する README を新規作成・更新する"
+policy:
+  allow_implicit_invocation: true
